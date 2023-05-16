@@ -1,0 +1,8 @@
+#!/bin/bash
+
+alias ls ls --color=auto
+alias ll ls -lh
+alias lla ll -aF
+alias grep grep --color=auto
+alias cls clear
+alias e echo $?

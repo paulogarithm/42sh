@@ -1,0 +1,209 @@
+:: Read the readme file before adding new tests
+
+>>> Required
+
+> Functionnal ls
+echo -ne "ls"
+
+> Multiple commands
+echo -ne "ls\nls"
+
+>>> End
+
+>>> Basics tests
+
+> Bad ls
+echo -ne "ls nofile"
+
+> Empty string
+echo -ne ""
+
+> (Run) Exit
+echo -ne "exit"
+
+> Exit
+echo -ne "exit\nls"
+
+> Empty Env
+$ env -i
+echo -ne "ls"
+
+>>> End
+
+>>> Setenv Unsetenv tests
+
+> (Run) Setenv 1 value
+echo -ne "setenv foo"
+
+> (Run) Setenv 2 values
+echo -ne "setenv foo bar"
+
+> (Run) Unset 1 value
+echo -ne "unsetenv foo"
+
+> (Run) Unset 2 values
+echo -ne "unsetenv foo bar"
+
+> Unset Path
+echo -ne "ls\nunsetenv PATH\nls"
+
+>>> End
+
+>>> Cd Tests
+
+> (Run) Empty cd
+echo -ne "cd"
+
+> (Run) Root cd
+echo -ne "cd /"
+
+> (Run) Back cd
+echo -ne "cd .."
+
+> Empty cd
+echo -ne "ls\ncd\nls"
+
+> Normal cd
+echo -ne "ls\ncd lib\nls"
+
+> Root cd
+echo -ne "ls\ncd /\nls"
+
+> Back cd
+echo -ne "ls\ncd ..\nls"
+
+> Vague cd
+echo -ne "ls\ncd ~\nls"
+
+> Minus cd
+echo -ne "cd /\nls\ncd -\nls"
+
+>>> End
+
+>>> Error Messages
+
+> Bad command
+echo -ne "notcommand"
+
+> Mispell exit
+echo -ne "exitt"
+
+> Cd nofile
+echo -ne "cd nofile"
+
+> Cd file
+echo -ne "cd ./mysh"
+
+> Cd first minus
+echo -ne "cd -"
+
+> Setenv too many args
+echo -ne "setenv a a a"
+
+> Setenv incorrect variable
+echo -ne "setenv -"
+
+> Unsetenv too few args
+echo -ne "unsetenv"
+
+> Segfault
+echo -ne MinishellTesting/bin/segfault.out
+
+> Broken
+echo -ne MinishellTesting/bin/broken.out
+
+> Floating
+echo -ne MinishellTesting/bin/floating.out
+
+>>> End
+
+>>> Pipe commands
+
+> Simple pipe command
+echo -e "ls | cat -e"
+
+> Chained pipe commands
+echo -e "ls | cat -e | grep execs | wc -c"
+
+> Many chained pipe commands
+echo -e "ls | echo salut | cat -e | cat -e | cat -e  | cat -e  | cat -e  | cat -e  | cat -e  | cat -e"
+
+> Without surrouding whitespaces
+echo -e "ls|echo salut"
+
+> Mixed (exit or not exit)
+echo -e "exit | echo salut"
+
+> Mixed (cd or not cd)
+echo -e "cd | pwd"
+
+> Mixed (unsetenv or not unsetenv)
+echo -e "setenv axel ; unsetenv axel | env | tail -1"
+
+> Mixed (setenv or not setenv)
+echo -e "setenv axel | env | grep axel"
+
+> Syntax (Only pipe)
+echo -e "|"
+
+> Syntax (Pipe without left argument)
+echo -e "| cat -e"
+
+> Syntax (Pipe without right argument)
+echo -e "ls | "
+
+> Pipe
+echo -e "pwd | cat -e | wc"
+
+> Pipe trap
+echo -e "pwd | | | | cat -e"
+
+>>> End
+
+>>> Redirections
+
+> (output) Verification of last test
+echo -e "cat output"
+
+> (output) Redirection without filename
+echo -e "ls > "
+
+> (output) Only double redirection
+echo -e ">"
+
+>>> End
+
+>>> Semilicon
+
+> Two classic commands
+echo -e "ls ; ls"
+
+> Multiple commands
+echo -e "echo a ; echo b ; ls ; cat -e ; echo eal ; sed s/a/t/g ; echo ammamya"
+
+> Empty inline command
+echo -e "ls ; ; echo salut"
+
+> Empty command
+echo -e ";"
+
+> Semicolon
+echo -e "ls;        ls; pwd;   ls"
+
+> Semicolon trap
+echo -e "pwd;; ; pwd"
+
+>>> End
+
+>>> Multiple category
+
+> Pipe without right argument with semilicon
+echo -e "ls | ; ls"
+
+> Pipe + Semicolon
+echo -e "pwd | cat -e |    wc; pwd"
+
+>> Pipe + Semicolon trap
+echo -e "pwd | ; cat -e ; |    wc; pwd"
+
+>>> End

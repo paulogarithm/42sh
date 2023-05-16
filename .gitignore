@@ -1,0 +1,6 @@
+.vscode
+42sh
+*.o
+*~
+.42sh-history
+vgcore*

@@ -1,0 +1,232 @@
+Minus cd:
+┌ Yours ───────────────────────┐
+│ -ne: Command not found.      │
+│ 42sh                         │
+│ based_function               │
+│ bonus                        │
+│ include                      │
+│ lib                          │
+│ Makefile                     │
+│ Readme.md                    │
+│ src                          │
+│ tests                        │
+│ : No such file or directory. │
+│ 42sh                         │
+│ based_function               │
+│ bonus                        │
+│ include                      │
+│ lib                          │
+│ Makefile                     │
+│ Readme.md                    │
+│ src                          │
+│ tests                        │
+└──────────────────────────────┘
+┌ Correct ─────────────────────┐
+│ -ne: Command not found.      │
+│ 42sh                         │
+│ based_function               │
+│ bonus                        │
+│ include                      │
+│ lib                          │
+│ Makefile                     │
+│ Readme.md                    │
+│ src                          │
+│ tests                        │
+│ : No such file or directory. │
+└──────────────────────────────┘
+
+
+Simple pipe command:
+┌ Yours ──────────────────┐
+│ -e: Command not found.$ │
+└─────────────────────────┘
+┌ Correct ────────────────┐
+│ -e: Command not found.  │
+└─────────────────────────┘
+
+
+Chained pipe commands:
+┌ Yours ─────────────────┐
+│ 0                      │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ -e: Command not found. │
+│ 0                      │
+└────────────────────────┘
+
+
+Many chained pipe commands:
+┌ Yours ─────────────────┐
+│ salut$$$$$$$$          │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ salut$$$$$$$$          │
+│ -e: Command not found. │
+└────────────────────────┘
+
+
+Without surrouding whitespaces:
+┌ Yours ─────────────────┐
+│ salut                  │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ salut                  │
+│ -e: Command not found. │
+└────────────────────────┘
+
+
+Mixed (exit or not exit):
+┌ Yours ─────────────────┐
+│ salut                  │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ salut                  │
+│ -e: Command not found. │
+└────────────────────────┘
+
+
+Mixed (cd or not cd):
+┌ Yours ────────────────────────────────────┐
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+┌ Correct ──────────────────────────────────┐
+│ /home/pol/Delivery/Shell-Programming/42sh │
+│ -e: Command not found.                    │
+└───────────────────────────────────────────┘
+
+
+Mixed (unsetenv or not unsetenv):
+┌ Yours ─────────────────┐
+│ -e: Command not found. │
+│ WSLENV=                │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ -e: Command not found. │
+│ HOST=DESKTOP-CT5HFUC   │
+└────────────────────────┘
+
+
+Mixed (setenv or not setenv):
+┌ Yours ─────────────────┐
+│                        │
+└────────────────────────┘
+┌ Correct ───────────────┐
+│ -e: Command not found. │
+└────────────────────────┘
+
+
+Syntax (Only pipe):
+┌ Yours ────────────────┐
+│                       │
+└───────────────────────┘
+┌ Correct ──────────────┐
+│ Invalid null command. │
+└───────────────────────┘
+
+
+Syntax (Pipe without left argument):
+┌ Yours ──────────────────┐
+│ -e: Command not found.$ │
+└─────────────────────────┘
+┌ Correct ────────────────┐
+│ -e: Command not found.  │
+└─────────────────────────┘
+
+
+Syntax (Pipe without right argument):
+┌ Yours ────────────────┐
+│                       │
+└───────────────────────┘
+┌ Correct ──────────────┐
+│ Invalid null command. │
+└───────────────────────┘
+
+
+Pipe:
+┌ Yours ──────────────────┐
+│       1       4      24 │
+└─────────────────────────┘
+┌ Correct ────────────────┐
+│ -e: Command not found.  │
+│       0       0       0 │
+└─────────────────────────┘
+
+
+Pipe trap:
+┌ Yours ────────────────┐
+│                       │
+└───────────────────────┘
+┌ Correct ──────────────┐
+│ Invalid null command. │
+└───────────────────────┘
+
+
+(output) Redirection without filename:
+┌ Yours ─────────────────────┐
+│                            │
+└────────────────────────────┘
+┌ Correct ───────────────────┐
+│ Missing name for redirect. │
+└────────────────────────────┘
+
+
+(output) Only double redirection:
+┌ Yours ─────────────────────┐
+│                            │
+└────────────────────────────┘
+┌ Correct ───────────────────┐
+│ Missing name for redirect. │
+└────────────────────────────┘
+
+
+Semicolon trap:
+┌ Yours ────────────────────────────────────┐
+│ -e: Command not found.                    │
+│ ;: Command not found.                     │
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+┌ Correct ──────────────────────────────────┐
+│ -e: Command not found.                    │
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+
+
+Pipe without right argument with semilicon:
+┌ Yours ────────────────┐
+│ 42sh                  │
+│ based_function        │
+│ bonus                 │
+│ include               │
+│ lib                   │
+│ Makefile              │
+│ Readme.md             │
+│ src                   │
+│ tests                 │
+└───────────────────────┘
+┌ Correct ──────────────┐
+│ Invalid null command. │
+└───────────────────────┘
+
+
+Pipe + Semicolon:
+┌ Yours ────────────────────────────────────┐
+│       1       4      24                   │
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+┌ Correct ──────────────────────────────────┐
+│ -e: Command not found.                    │
+│       0       0       0                   │
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+
+
+ Pipe + Semicolon trap:
+┌ Yours ────────────────────────────────────┐
+│       0       0       0                   │
+│ /home/pol/Delivery/Shell-Programming/42sh │
+└───────────────────────────────────────────┘
+┌ Correct ──────────────────────────────────┐
+│ Invalid null command.                     │
+└───────────────────────────────────────────┘
+
+

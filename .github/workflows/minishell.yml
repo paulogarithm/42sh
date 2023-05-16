@@ -1,0 +1,47 @@
+name: minishell-1
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - "ga-ignore-**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Build
+      run: |
+        make -s re
+        test -f 42sh
+  
+    - name: Test minishell-1 'ls'
+      run: |
+        result1=$(echo -ne "ls" | ./42sh)
+        result2=$(echo -ne "ls" | bash)
+        if [ "$result1" != "$result2" ]; then
+          echo "Results are different"
+          exit 1
+        fi
+  
+    - name: Test minishell-2 'pipe'
+      run: |
+        result1=$(echo -ne "ls | grep 42" | ./42sh)
+        result2=$(echo -ne "ls | grep 42" | bash)
+        if [ "$result1" != "$result2" ]; then
+          echo "Results are different"
+          exit 1
+        fi
+
+    - name: Test basic 'empty 42sh input'
+      run: |
+        echo "" | ./42sh
+        res=$?
+        if [ $res != 0 ]; then
+          echo "Error while testing."
+          exit 1
+        fi
+
